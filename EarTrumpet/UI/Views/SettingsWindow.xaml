@@ -427,7 +427,6 @@
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ElementName=WindowRoot, Path=(Theme:AcrylicBrush.IsSuppressed)}" Value="True">
                                 <DataTrigger.EnterActions>
-
                                     <BeginStoryboard Name="IsSuppressed_Enter_AnimationsOn">
                                         <Storyboard>
                                             <DoubleAnimation Storyboard.TargetProperty="Opacity"

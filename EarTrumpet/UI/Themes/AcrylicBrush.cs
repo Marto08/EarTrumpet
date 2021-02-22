@@ -18,7 +18,7 @@ namespace EarTrumpet.UI.Themes
         public static void SetIsSuppressed(DependencyObject obj, bool value) => obj.SetValue(IsSuppressedProperty, value);
         public static readonly DependencyProperty IsSuppressedProperty =
         DependencyProperty.RegisterAttached("IsSuppressed", typeof(bool), typeof(AcrylicBrush), new PropertyMetadata(false));
-        
+
         private static void BackgroundChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var window = (Window)dependencyObject;
@@ -33,7 +33,10 @@ namespace EarTrumpet.UI.Themes
                     if (!locationChangedTimer.IsEnabled)
                     {
                         SetIsSuppressed(window, true);
+
+                        // This works to prevent flicker:
                         window.InvalidateVisual();
+                        window.UpdateLayout();
                         Dispatcher.CurrentDispatcher.InvokeAsync(() => UpdateWindowAcrylic(window), DispatcherPriority.Render);
                     }
                     locationChangedTimer.Stop();
@@ -68,13 +71,13 @@ namespace EarTrumpet.UI.Themes
         private static void UpdateWindowAcrylic(Window window)
         {
             var suppressed = GetIsSuppressed(window);
-            if (suppressed) 
+            if (suppressed)
             {
                 AccentPolicyLibrary.DisableAcrylic(window);
-            } 
-            else 
+            }
+            else
             {
-                ApplyAcrylicToWindow(window, GetBackground(window)); 
+                ApplyAcrylicToWindow(window, GetBackground(window));
             }
         }
     }
