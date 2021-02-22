@@ -33,7 +33,8 @@ namespace EarTrumpet.UI.Themes
                     if (!locationChangedTimer.IsEnabled)
                     {
                         SetIsSuppressed(window, true);
-                        Dispatcher.CurrentDispatcher.InvokeAsync(() => UpdateWindowAcrylic(window));
+                        window.InvalidateVisual();
+                        Dispatcher.CurrentDispatcher.InvokeAsync(() => UpdateWindowAcrylic(window), DispatcherPriority.Render);
                     }
                     locationChangedTimer.Stop();
                     locationChangedTimer.Start();
